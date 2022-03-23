@@ -24,7 +24,7 @@ def mymodel():
     model.add(Conv2D(32,(3,3), activation="relu", padding="same"))
     model.add(GlobalAveragePooling2D())
     model.add(Flatten())
-    model.add(Dense(512,activation='relu'))
+    model.add(Dense(128,activation='relu'))
     model.add(Dense(3, activation='softmax'))
     model.compile(optimizer = 'adam', 
               loss = 'categorical_crossentropy', 
