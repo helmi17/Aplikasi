@@ -17,6 +17,30 @@ from PIL import Image, ImageOps
 from streamlit_option_menu import option_menu
 from matplotlib.pyplot import cm
 
+import streamlit as st
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import keras
+import tensorflow as tf
+from tensorflow.keras import datasets, layers, models
+import cv2
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, AveragePooling2D, Dropout, Flatten, Dense, GlobalAveragePooling2D,BatchNormalization
+import keras
+from sklearn.metrics import confusion_matrix, classification_report,accuracy_score,precision_score,recall_score,f1_score
+import tensorflow as tf
+from tensorflow.keras import datasets, layers, models
+from sklearn.model_selection import StratifiedKFold
+import tk
+from tkinter.filedialog import askopenfilename
+import seaborn as sns
+from PIL import Image, ImageOps
+from streamlit_option_menu import option_menu
+from matplotlib.pyplot import cm
+
+# In[ ]:
+
 def mymodel():
     model = tf.keras.Sequential()
     model.add(Conv2D(32,(3,3), activation="relu", padding="same", input_shape=(128, 128, 3)))
@@ -26,9 +50,9 @@ def mymodel():
     model.add(Flatten())
     model.add(Dense(128,activation='relu'))
     model.add(Dense(3, activation='softmax'))
-    model.compile(optimizer = 'adam', 
-              loss = 'categorical_crossentropy', 
-              metrics=['accuracy'])
+    model.compile(optimizer = 'adam',
+                  loss='categorical_crossentropy', 
+                  metrics=['accuracy'])
     return model
 model = mymodel()
 def getData():
@@ -81,7 +105,7 @@ with st.sidebar:
         options=["Home","Models","Klasifikasi"],
     )
 if selected == "Home":
-    st.header("Klasifikasi penyakit batang tanaman jagung menggunakan")
+    st.header("Klasifikasi penyakit batang tanaman jagung menggunakan CNN")
     image = Image.open ("093416100_1563978081-iStock-599971330.jpg")
     st.image(image,width=665)
 if selected == "Models":
@@ -109,7 +133,8 @@ if selected == "Models":
         a_test = x.shape[1:4]
         st.write("Data validasi yang digunakan sebanyak : {}".format(n_test))
         st.write("Each image is of size: {}".format(a_test))
-if selected == "Klasifikasi":  
+if selected == "Klasifikasi":
+        
     selected = option_menu(
     menu_title="Preprocessing",
     options=["Citra asli","thresholding","Ratakan mask","Hasil"],
