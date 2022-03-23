@@ -17,27 +17,6 @@ from PIL import Image, ImageOps
 from streamlit_option_menu import option_menu
 from matplotlib.pyplot import cm
 
-import streamlit as st
-import os
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import keras
-import tensorflow as tf
-from tensorflow.keras import datasets, layers, models
-import cv2
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, AveragePooling2D, Dropout, Flatten, Dense, GlobalAveragePooling2D,BatchNormalization
-import keras
-from sklearn.metrics import confusion_matrix, classification_report,accuracy_score,precision_score,recall_score,f1_score
-import tensorflow as tf
-from tensorflow.keras import datasets, layers, models
-from sklearn.model_selection import StratifiedKFold
-import tk
-from tkinter.filedialog import askopenfilename
-import seaborn as sns
-from PIL import Image, ImageOps
-from streamlit_option_menu import option_menu
-from matplotlib.pyplot import cm
 
 # In[ ]:
 
