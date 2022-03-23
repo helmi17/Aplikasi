@@ -19,21 +19,16 @@ from matplotlib.pyplot import cm
 
 def mymodel():
     model = tf.keras.Sequential()
-    model.add(Conv2D(128,(3,3), activation="relu", padding="same", input_shape=(128, 128, 3)))
-    model.add(Conv2D(128,(3,3), activation="relu", padding="same"))
+    model.add(Conv2D(32,(3,3), activation="relu", padding="same", input_shape=(128, 128, 3)))
     model.add(MaxPooling2D((2, 2)))
-    model.add(Conv2D(256,(3,3), activation="relu", padding="same"))
-    model.add(Conv2D(256,(3,3), activation="relu", padding="same"))
-    model.add(MaxPooling2D((2, 2)))
-    model.add(Conv2D(384,(3,3), activation="relu", padding="same"))
-    model.add(Conv2D(256,(3,3), activation="relu", padding="same"))
-    model.add(MaxPooling2D((2, 2)))
+    model.add(Conv2D(32,(3,3), activation="relu", padding="same"))
+    model.add(GlobalAveragePooling2D())
     model.add(Flatten())
     model.add(Dense(512,activation='relu'))
     model.add(Dense(3, activation='softmax'))
-    model.compile(tf.keras.optimizers.SGD(learning_rate=0.0001),
-                  loss='categorical_crossentropy', 
-                  metrics=['accuracy'])
+    model.compile(optimizer = 'adam', 
+              loss = 'categorical_crossentropy', 
+              metrics=['accuracy'])
     return model
 model = mymodel()
 def getData():
@@ -91,29 +86,29 @@ if selected == "Home":
     st.image(image,width=665)
 if selected == "Models":
     st.header("Accuracy trained models")
-    # tampilkan = st.button("tampilkan accuracy")
-    # if tampilkan:
-    #     x_val,y_val=getData()
-    #     model.load_weights('trainmodel.hdf5')
-    #     prediksi = model.predict(x_val)
-    #     y_prediksi=np.argmax(prediksi,axis=1)
-    # #     print(confusion_matrix(y_true=y_val, y_pred=y_prediksi))
+    tampilkan = st.button("tampilkan accuracy")
+    if tampilkan:
+        x_val,y_val=getData()
+        model.load_weights('Bobot aplikasi .hdf5')
+        prediksi = model.predict(x_val)
+        y_prediksi=np.argmax(prediksi,axis=1)
+    #     print(confusion_matrix(y_true=y_val, y_pred=y_prediksi))
 
-    #     presisi = precision_score(y_val, y_prediksi,average='macro')
-    #     recall = recall_score(y_val, y_prediksi,average='macro')
-    #     f1 = f1_score(y_val, y_prediksi,average='macro')
-    #     acc = accuracy_score(y_val, y_prediksi)
+        presisi = precision_score(y_val, y_prediksi,average='macro')
+        recall = recall_score(y_val, y_prediksi,average='macro')
+        f1 = f1_score(y_val, y_prediksi,average='macro')
+        acc = accuracy_score(y_val, y_prediksi)
 
-    #     st.write("=========================================================================================")
-    #     st.write("precission :",nilai2persen(presisi))
-    #     st.write("reacall :",nilai2persen(recall))
-    #     st.write("F1-score :",nilai2persen(f1))
-    #     st.write("Classification accuracy :",nilai2persen(acc))
-    #     st.write("=========================================================================================")
-    #     n_test = y_val.shape[0]
-    #     a_test = x.shape[1:4]
-    #     st.write("Data validasi yang digunakan sebanyak : {}".format(n_test))
-    #     st.write("Each image is of size: {}".format(a_test))
+        st.write("=========================================================================================")
+        st.write("precission :",nilai2persen(presisi))
+        st.write("reacall :",nilai2persen(recall))
+        st.write("F1-score :",nilai2persen(f1))
+        st.write("Classification accuracy :",nilai2persen(acc))
+        st.write("=========================================================================================")
+        n_test = y_val.shape[0]
+        a_test = x.shape[1:4]
+        st.write("Data validasi yang digunakan sebanyak : {}".format(n_test))
+        st.write("Each image is of size: {}".format(a_test))
 if selected == "Klasifikasi":  
     selected = option_menu(
     menu_title="Preprocessing",
@@ -189,21 +184,21 @@ if selected == "Klasifikasi":
             trs = Image.open(simp)
             st.image(trs, caption='Hasil penggabungan citra asli dan citra mask',width=250)
             st.write("=========================================================================================")
-            # cls = st.button("klasifikasi")
-            # if cls : 
-            #     read = cv2.imread(simp)
-            #     img = cv2.cvtColor(read,cv2.COLOR_BGR2RGB)
-            #     dims=np.expand_dims(img,axis=0)
-            #     model.load_weights('trainmodel.hdf5')
-            #     prediksi = model.predict(dims)
-            #     acc=np.argmax(prediksi,axis=1)
-            #     for i in acc :
-            #         if i == 0 :
-            #             st.warning('Batang mengalami busuk Anthracnose !!!')
-            #         elif i == 1 :
-            #             st.warning("Batang mengalami busuk Gibberella !!!")
-            #         else :
-            #             st.success('Batang sehat :)')
+            cls = st.button("klasifikasi")
+            if cls : 
+                read = cv2.imread(simp)
+                img = cv2.cvtColor(read,cv2.COLOR_BGR2RGB)
+                dims=np.expand_dims(img,axis=0)
+                model.load_weights('Bobot aplikasi .hdf5')
+                prediksi = model.predict(dims)
+                acc=np.argmax(prediksi,axis=1)
+                for i in acc :
+                    if i == 0 :
+                        st.warning('Batang mengalami busuk Anthracnose !!!')
+                    elif i == 1 :
+                        st.warning("Batang mengalami busuk Gibberella !!!")
+                    else :
+                        st.success('Batang sehat :)')
 
 
     
