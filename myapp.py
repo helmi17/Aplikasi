@@ -92,7 +92,7 @@ if selected == "Models":
     tampilkan = st.button("tampilkan accuracy")
     if tampilkan:
         x_val,y_val=getData()
-        model.load_weights('Bobot aplikasi .hdf5')
+        model.load_weights('Bobot aplikasi 2 .hdf5')
         prediksi = model.predict(x_val)
         y_prediksi=np.argmax(prediksi,axis=1)
     #     print(confusion_matrix(y_true=y_val, y_pred=y_prediksi))
@@ -193,7 +193,7 @@ if selected == "Klasifikasi":
                 read = cv2.imread(simp)
                 img = cv2.cvtColor(read,cv2.COLOR_BGR2RGB)
                 dims=np.expand_dims(img,axis=0)
-                model.load_weights('Bobot aplikasi .hdf5')
+                model.load_weights('Bobot aplikasi 2 .hdf5')
                 prediksi = model.predict(dims)
                 acc=np.argmax(prediksi,axis=1)
                 for i in acc :
